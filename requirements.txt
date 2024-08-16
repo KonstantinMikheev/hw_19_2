@@ -1,1 +1,6 @@
-Django
+
+Django==5.0.7
+ipython==8.26.0
+orm==0.3.1
+pillow==10.4.0
+psycopg2-binary==2.9.9

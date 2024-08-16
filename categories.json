@@ -1,0 +1,42 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "title": "Телевизоры",
+      "description": "Телевизоры по самым выгодным ценам"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "title": "Смартфоны",
+      "description": "Смартфоны по самым выгодным ценам"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "title": "Бытовая техника",
+      "description": "Бытовая техника по самым выгодным ценам"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "title": "Сетевое оборудование",
+      "description": "Сетевое оборудование по самым выгодным ценам"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "title": "Компьютеры",
+      "description": "Компьютеры по самым выгодным ценам"
+    }
+  }
+]
