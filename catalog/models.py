@@ -36,7 +36,7 @@ class Product(models.Model):
         upload_to="products/image", verbose_name="Изображение", **NULLABLE
     )
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, **NULLABLE, related_name="products"
+        Category, on_delete=models.CASCADE, related_name="products", **NULLABLE
     )
     price = models.IntegerField(verbose_name="Цена за покупку")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -53,3 +53,18 @@ class Product(models.Model):
             "category",
             "price",
         )
+
+class ContactData(models.Model):
+    name = models.CharField(max_length=100, verbose_name='Имя')
+    phone = models.CharField(max_length=50, verbose_name='Номер телефона')
+    message = models.TextField(verbose_name="Запрос пользователя", help_text="Введите Ваш запрос.", **NULLABLE)
+    created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания (записи в БД)')
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+        ordering = ('name',)
+
+    def __str__(self):
+        return f"Contact: {self.name}, {self.phone}"
+
