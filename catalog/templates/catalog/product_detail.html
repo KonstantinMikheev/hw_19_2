@@ -5,18 +5,18 @@
     <div class="col-md-6 mb-3">
         <div class="card mb-4 box-shadow">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">{{product.title}}</h4>
+                <h4 class="my-0 font-weight-normal">{{object.title}}</h4>
             </div>
             <div class="row g-0">
                 <div class="col-md-3">
-                    <img src="{{ product.preview | media_filter}}" class="img-fluid rounded-start">
+                    <img src="{{ object.preview | media_filter}}" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="card-text"><strong>Цена:</strong> ₽{{ product.price }}</p>
+                        <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                        <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
                         <button type="button" class="btn btn-secondary">Заказать</button>
-                        <a class="btn btn-lg" href="{% url 'catalog:products' %}" role="button">Назад</a>
+                        <a class="btn btn-lg" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
                     </div>
                 </div>
             </div>

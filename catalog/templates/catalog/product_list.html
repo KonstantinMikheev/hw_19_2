@@ -5,7 +5,7 @@
 <div class="dropdown m-3">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
             aria-expanded="false">
-        Категории блюд
+        Категории
     </button>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="categoryDropdown">
         {% for category in categories %}
@@ -19,20 +19,20 @@
 
 {% block content %}
 <div class="row">
-    {% for product in products %}
+    {% for object in object_list %}
     <div class="col-md-6 mb-3">
         <div class="card mb-4 box-shadow">
             <h4 class="my-0 font-weight-normal">
-                <a class="btn btn-lg" href="{% url 'catalog:product_detail' product.pk %}" role="button">{{product.title}}</a>
+                <a class="btn btn-lg" href="{% url 'catalog:product_detail' object.pk %}" role="button">{{object.title}}</a>
             </h4>
             <div class="row g-0">
                 <div class="col-md-3">
-                    <img src="{{ product.preview | media_filter }}" class="img-fluid rounded-start">
+                    <img src="{{ object.preview | media_filter }}" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">{{ product.description|truncatechars:100 }}</p>
-                        <p class="card-text"><strong>Цена:</strong> ₽{{ product.price }}</p>
+                        <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                        <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
                         <button type="button" class="btn btn-secondary">Заказать</button>
                     </div>
                 </div>
