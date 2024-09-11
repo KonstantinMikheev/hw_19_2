@@ -17,6 +17,7 @@
                         <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
                         <button type="button" class="btn btn-secondary">Заказать</button>
                         <a class="btn btn-lg" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
+                        <p class="card-text"> Актуальная версия: {{ object.active }}</p>
                     </div>
                 </div>
             </div>

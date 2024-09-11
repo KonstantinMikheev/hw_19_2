@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from pytils.translit import slugify
 from django.urls import reverse_lazy, reverse
@@ -33,11 +35,17 @@ class BlogDetailView(DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
-        self.objects = super().get_object(queryset)
-        self.objects.views_count += 1
-        self.objects.save()
-
-        return self.objects
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        if self.object.views_count == 100:
+            send_mail(
+                subject='Поздравляем!',
+                message=f'Количество просмотров поста "{self.object.title}" достигло 100',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=['konstantin_mikheev@mail.ru'],
+            )
+        self.object.save()
+        return self.object
 
 
 class BlogUpdateView(UpdateView):

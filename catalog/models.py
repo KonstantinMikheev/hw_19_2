@@ -1,6 +1,5 @@
 from django.db import models
 
-
 NULLABLE = {"blank": True, "null": True}  # Делает поле необязательным к заполнению
 
 
@@ -54,6 +53,7 @@ class Product(models.Model):
             "price",
         )
 
+
 class ContactData(models.Model):
     name = models.CharField(max_length=100, verbose_name='Имя')
     phone = models.CharField(max_length=50, verbose_name='Номер телефона')
@@ -68,3 +68,16 @@ class ContactData(models.Model):
     def __str__(self):
         return f"Contact: {self.name}, {self.phone}"
 
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="versions", verbose_name="продукт")
+    version_number = models.PositiveIntegerField(default=0, verbose_name="номер версии", unique=True)
+    version_name = models.CharField(max_length=150, verbose_name="название версии")
+    version_flag = models.BooleanField(default=True, verbose_name="актуальная версия")
+
+    def __str__(self):
+        return f"{self.product} {self.version_number} {self.version_name} {self.version_flag}"
+
+    class Meta:
+        verbose_name = "версия продукта"
+        verbose_name_plural = "версии продуктов"

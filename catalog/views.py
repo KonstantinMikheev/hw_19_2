@@ -1,14 +1,18 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
 
-from catalog.forms import ContactForm
-from catalog.models import Category, Product, ContactData
+from catalog.forms import ContactForm, ProductForm, VersionForm
+from catalog.models import Category, Product, ContactData, Version
 
 
 class ProductListView(ListView):
+    """Класс-контроллер для вывода главной страницы"""
     model = Product
 
     def get_queryset(self):
+        """Метод для фильтрации продуктов по категории"""
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
         if category_id:
@@ -16,14 +20,55 @@ class ProductListView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data['categories'] = Category.objects.all()
-        data['title'] = 'Главная'
-        return data
+        """Метод для вывода названия версии если она активна"""
+        context_data = super().get_context_data(**kwargs)
+        context_data['categories'] = Category.objects.all()
+        context_data['title'] = 'Главная'
+        for product in Product.objects.all():
+            active_version = Version.objects.filter(product_id=product.pk, version_flag=True)
+            if active_version:
+                product.active = active_version.last().version_name
+        context_data['product_list'] = Product.objects.all()
+        return context_data
 
 
 class ProductDetailView(DetailView):
     model = Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:product_list')
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_detail', args=[self.object.pk])
+
+    def get_context_data(self, **kwargs):
+        """Метод для вывода формы версии при редактировании продукта"""
+        context_data = super().get_context_data(**kwargs)
+        ProductFormset = inlineformset_factory(Product, Version, VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = ProductFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = ProductFormset(instance=self.object)
+
+    def form_valid(self, form):
+        """Метод для сохранения продукта и версии при редактировании"""
+        formset = self.get_context_data()["formset"]
+        if formset.is_valid() and form.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
 # def product_detail(request, pk):
@@ -52,6 +97,7 @@ class ContactsDataView(TemplateView):
     template_name = "catalog/contacts.html"
 
     def get(self, request, *args, **kwargs):
+        """Метод для отображения формы и списка контактов"""
         form = ContactForm()
         contacts_data = ContactData.objects.all()  # Получаем все контакты из базы данных
         return render(request, self.template_name, {
@@ -61,6 +107,7 @@ class ContactsDataView(TemplateView):
         })
 
     def post(self, request, *args, **kwargs):
+        """Метод для обработки отправленной формы контактов"""
         if request.method == "POST":
             name = request.POST.get("name")
             phone = request.POST.get("phone")
