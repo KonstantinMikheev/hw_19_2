@@ -50,3 +50,13 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Version
         fields = '__all__'
+    #
+    # def clean_ver_number(self, *args, **kwargs):
+    #     cleaned_data = self.cleaned_data['version_number']
+    #     versions_list = Version.objects.filter(КАК ЗДЕСЬ СДЕЛАТЬ ФИЛЬТРАЦИЮ, ЧТОБЫ НЕЛЬЗЯ БЫЛО УКАЗЫВАТЬ УЖЕ ИСПОЛЬЗОВАННУЮ ВЕРСИЮ?)
+    #     if cleaned_data in versions_list:
+    #         raise forms.ValidationError(
+    #             f'Данная версия уже существует.'
+    #         )
+    #
+    #     return cleaned_data

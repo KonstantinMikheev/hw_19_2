@@ -1,5 +1,6 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-6 mb-3">
@@ -13,11 +14,10 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">{{ object.description|truncatechars:100 }}</p>
-                        <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
+                        <p class="card-text">{{ object.description }}</p>
+                        <p class="card-text"><strong>Цена:</strong> ₽ {{ object.price }}</p>
                         <button type="button" class="btn btn-secondary">Заказать</button>
                         <a class="btn btn-lg" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
-                        <p class="card-text"> Актуальная версия: {{ object.active }}</p>
                     </div>
                 </div>
             </div>

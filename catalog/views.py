@@ -12,11 +12,12 @@ class ProductListView(ListView):
     model = Product
 
     def get_queryset(self):
-        """Метод для фильтрации продуктов по категории"""
+        """Метод для фильтрации продуктов по категории с подгрузкой версий"""
         queryset = super().get_queryset()
         category_id = self.request.GET.get('category')
         if category_id:
             queryset = queryset.filter(category_id=category_id)
+        queryset = queryset.prefetch_related('versions')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -24,11 +25,13 @@ class ProductListView(ListView):
         context_data = super().get_context_data(**kwargs)
         context_data['categories'] = Category.objects.all()
         context_data['title'] = 'Главная'
-        for product in Product.objects.all():
+        products = context_data['product_list']
+        for product in products:
             active_version = Version.objects.filter(product_id=product.pk, version_flag=True)
             if active_version:
                 product.active = active_version.last().version_name
-        context_data['product_list'] = Product.objects.all()
+            else:
+                product.active = 'Нет активной версии'
         return context_data
 
 
