@@ -1,0 +1,29 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="col-12">
+    <form method="post" enctype="multipart/form-data">
+        <div class="col-3"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        {% if user.is_authenticated %}
+                        <h3 class="card-title">Профиль пользователя</h3>
+                        {% else %}
+                        <h3 class="card-title">Вход</h3>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        {% if user.is_authenticated %}
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        {% else %}
+                        <button type="submit" class="btn btn-primary">Регистрация</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+{% endblock %}

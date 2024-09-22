@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import BooleanField
 
 from catalog.models import ContactData, Product, Version
@@ -26,7 +27,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('owner',)
 
     def clean_title(self):
         cleaned_data = self.cleaned_data['title']
@@ -50,13 +51,24 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Version
         fields = '__all__'
+
+    def clean__product_version(self):
+        cleaned_data = super().clean()
+        version_number = cleaned_data.get('version_number')
+        product = cleaned_data.get('product')
+
+        if Version.objects.filter(product=product, version_number=version_number).exists():
+            raise ValidationError(f'Версия {version_number} для этого продукта уже существует.')
+
+        return cleaned_data
+
+    # def clean_is_active(self):
+    #     product = self.instance  # получаем продукт, с которым работаем
+    #     versions = product.version_set.all()  # все версии этого продукта
+    #     cleaned_data = self.cleaned_data["is_active"]
     #
-    # def clean_ver_number(self, *args, **kwargs):
-    #     cleaned_data = self.cleaned_data['version_number']
-    #     versions_list = Version.objects.filter(КАК ЗДЕСЬ СДЕЛАТЬ ФИЛЬТРАЦИЮ, ЧТОБЫ НЕЛЬЗЯ БЫЛО УКАЗЫВАТЬ УЖЕ ИСПОЛЬЗОВАННУЮ ВЕРСИЮ?)
-    #     if cleaned_data in versions_list:
-    #         raise forms.ValidationError(
-    #             f'Данная версия уже существует.'
-    #         )
+    #     if versions.filter(is_active=True).exists() and cleaned_data:
+    #         raise ValidationError('Не может быт несколько актуальных версий')
     #
     #     return cleaned_data
+

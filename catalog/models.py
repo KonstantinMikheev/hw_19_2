@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}  # Делает поле необязательным к заполнению
 
 
@@ -41,6 +43,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    owner = models.ForeignKey(
+        User,
+        verbose_name="владелец",
+        help_text='Укажите производителя',
+        on_delete=models.SET_NULL,
+        **NULLABLE
+        )
+
     def __str__(self):
         return self.title
 
@@ -81,3 +91,6 @@ class Version(models.Model):
     class Meta:
         verbose_name = "версия продукта"
         verbose_name_plural = "версии продуктов"
+        constraints = [
+            models.UniqueConstraint(fields=['product', 'version_number'], name='unique_product_version')
+        ]
