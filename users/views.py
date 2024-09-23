@@ -76,7 +76,7 @@ class UserPasswordResetView(PasswordResetView):
                     from_email=EMAIL_HOST_USER,
                     recipient_list=[user.email]
                 )
-            return redirect(reverse('users:login'))
+            return redirect(reverse('users:user_password_sent'))
         except:
             return redirect(reverse('users:email_not_found'))
 
@@ -84,3 +84,7 @@ class UserPasswordResetView(PasswordResetView):
 class EmailNotFoundView(TemplateView):
     """Отправка ответа об отсутствии почты"""
     template_name = 'users/email_not_found.html'
+
+class UserPasswordSentView(TemplateView):
+    """Отправка ответа об отсутствии почты"""
+    template_name = 'users/user_password_sent.html'
