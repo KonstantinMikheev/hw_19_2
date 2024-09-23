@@ -4,10 +4,11 @@ import string
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, TemplateView, FormView
+from django.views.generic import CreateView, UpdateView, TemplateView
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm, UserPasswordResetForm
@@ -32,7 +33,7 @@ class UserRegisterView(CreateView):
         send_mail(
             subject='Подтверждение почты',
             message=f'Привет! Перейди по ссылке для подтверждения почты {url}',
-            from_email=settings.EMAIL_HOST_USER,
+            from_email=EMAIL_HOST_USER,
             recipient_list=[user.email],
         )
         return super().form_valid(form)
@@ -55,30 +56,31 @@ class UserProfileView(UpdateView):
         return self.request.user
 
 
-class UserPasswordResetView(FormView):
+class UserPasswordResetView(PasswordResetView):
     """Сброс пароля"""
     template_name = 'users/user_password_reset.html'
     form_class = UserPasswordResetForm
-    success_url = reverse_lazy('users:user_password_sent')
+    success_url = reverse_lazy('users:login')
 
     def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        user = User.objects.filter(email=email).first()
+        email = form.cleaned_data['email']
+        try:
+            user = User.objects.get(email=email)
+            if user:
+                password = User.objects.make_random_password(length=10)
+                user.set_password(password)
+                user.save()
+                send_mail(
+                    subject='Сброс пароля',
+                    message=f' Ваш новый пароль {password}',
+                    from_email=EMAIL_HOST_USER,
+                    recipient_list=[user.email]
+                )
+            return redirect(reverse('users:login'))
+        except:
+            return redirect(reverse('users:email_not_found'))
 
-        if user is not None:
-            characters = string.ascii_letters + string.digits
-            new_password = ''.join(random.choice(characters) for i in range(12))
 
-            user.password = make_password(new_password)
-            user.save()
-
-            subject = 'Восстановление пароля'
-            message = f'Ваш новый пароль: {new_password}'
-            send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
-
-        return super().form_valid(form)
-
-
-class UserPasswordSentView(TemplateView):
-    """Отправка пароля"""
-    template_name = 'users/user_password_sent.html'
+class EmailNotFoundView(TemplateView):
+    """Отправка ответа об отсутствии почты"""
+    template_name = 'users/email_not_found.html'
