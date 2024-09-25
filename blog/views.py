@@ -1,16 +1,21 @@
 from django.conf import settings
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from pytils.translit import slugify
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from blog.forms import BlogForm, BlogModeratorForm
 from blog.models import Blog
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
-    fields = ('title', 'body', 'preview', 'is_published',)
+    form_class = BlogForm
     success_url = reverse_lazy('blog:list')
 
     def form_valid(self, form):
@@ -27,11 +32,11 @@ class BlogListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        # queryset = queryset.filter(is_published=True) # Скрывает деактивированные статьи
+        # queryset = queryset.filter(is_published=True)  # Скрывает деактивированные статьи
         return queryset
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
@@ -48,9 +53,9 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
-    fields = ('title', 'body', 'preview', 'is_published',)
+    form_class = BlogForm
     success_url = reverse_lazy('blog:list')
 
     def form_valid(self, form):
@@ -64,12 +69,26 @@ class BlogUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
 
+    def get_form_class(self):
+        """Метод для выбора формы в зависимости от прав доступа пользователя"""
+        user = self.request.user  # Получаем текущего пользователя
+        if user == self.object.author:
+            return BlogForm
+        elif user.has_perm('blog.can_edit_is_published') and user.has_perm(
+                'blog.can_edit_body') and user.has_perm('blog.can_edit_title') and user.has_perm(
+            'blog.can_edit_preview') or user.is_superuser:
+            return BlogModeratorForm
+        else:
+            raise PermissionDenied
 
-class BlogDeleteView(DeleteView):
+
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
 
 
+@login_required
+@permission_required
 def toggle_activity(request, pk):
     blog_item = get_object_or_404(Blog, pk=pk)
     if blog_item.is_published:

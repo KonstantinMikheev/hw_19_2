@@ -51,6 +51,8 @@ class Product(models.Model):
         **NULLABLE
         )
 
+    is_published = models.BooleanField(verbose_name="Опубликовано ", default=False)
+
     def __str__(self):
         return self.title
 
@@ -62,6 +64,11 @@ class Product(models.Model):
             "category",
             "price",
         )
+        permissions = [
+            ('change_is_published', 'User can change the status of product'),
+            ('change_description', 'User can change the description of product'),
+            ('change_category', 'User can change the category of product'),
+        ]
 
 
 class ContactData(models.Model):

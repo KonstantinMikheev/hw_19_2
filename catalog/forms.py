@@ -46,6 +46,20 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
                 )
         return cleaned_data
 
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'is_published',)
+
+        def clean_description(self):
+            cleaned_data = self.cleaned_data['description']
+            for word in REJECTED_WORDS:
+                if word in cleaned_data.lower().strip():
+                    raise forms.ValidationError(
+                        f'Нельзя использовать слова: "{", ".join(str(i) for i in REJECTED_WORDS)}" в описании продукта.'
+                    )
+            return cleaned_data
+
 
 class VersionForm(StyleFormMixin, forms.ModelForm):
     class Meta:

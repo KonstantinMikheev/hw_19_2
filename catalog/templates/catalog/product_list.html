@@ -35,11 +35,17 @@
                         <p class="card-text">{{ object.description|truncatechars:100 }}</p>
                         <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
                         <div class="btn-group">
+                            {% if user.is_authenticated %}
                             <a href="#"
                                class="btn btn-sm btn-outline-secondary">Заказать</a>
-                            {% if user.is_authenticated %}
+                            {% endif %}
+                            {% if perms.catalog.change_is_published and perms.catalog.change_description and perms.catalog.change_category or user == object.owner %}
                             <a href="{% url 'catalog:product_update' object.pk %}"
                                class="btn btn-sm btn-outline-secondary">Изменить</a>
+                            {% endif %}
+                            {% if user == object.owner or user.is_superuser %}
+                            <a href="{% url 'catalog:product_delete' object.pk %}"
+                               class="btn btn-sm btn-outline-danger">Удалить</a>
                             {% endif %}
                         </div>
                         <p class="card-text"> Актуальная версия: {{ object.active }}</p>
