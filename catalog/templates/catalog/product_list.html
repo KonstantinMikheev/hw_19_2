@@ -1,0 +1,59 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block choice %}
+<div class="dropdown m-3">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        Категории
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="categoryDropdown">
+        {% for category in categories %}
+        <li>
+            <a class="dropdown-item" href="?category={{ category.id }}">{{ category.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for object in object_list %}
+    <div class="col-md-6 mb-3">
+        <div class="card mb-4 box-shadow">
+            <h4 class="my-0 font-weight-normal">
+                <a class="btn btn-lg" href="{% url 'catalog:product_detail' object.pk %}"
+                   role="button">{{object.title}}</a>
+            </h4>
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img src="{{ object.preview | media_filter }}" class="img-fluid rounded-start">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">{{ object.description|truncatechars:100 }}</p>
+                        <p class="card-text"><strong>Цена:</strong> ₽{{ object.price }}</p>
+                        <div class="btn-group">
+                            {% if user.is_authenticated %}
+                            <a href="#"
+                               class="btn btn-sm btn-outline-secondary">Заказать</a>
+                            {% endif %}
+                            {% if perms.catalog.change_is_published and perms.catalog.change_description and perms.catalog.change_category or user == object.owner %}
+                            <a href="{% url 'catalog:product_update' object.pk %}"
+                               class="btn btn-sm btn-outline-secondary">Изменить</a>
+                            {% endif %}
+                            {% if user == object.owner or user.is_superuser %}
+                            <a href="{% url 'catalog:product_delete' object.pk %}"
+                               class="btn btn-sm btn-outline-danger">Удалить</a>
+                            {% endif %}
+                        </div>
+                        <p class="card-text"> Актуальная версия: {{ object.active }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,288 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "title": "Гамбургер",
+      "description": "Рубленый бифштекс из натуральной цельной говядины на карамелизованной булочке, заправленной горчицей, кетчупом, луком и кусочком маринованного огурчика",
+      "preview": "products/image/gamburger.webp",
+      "category": 1,
+      "price": 65,
+      "created_at": "2024-08-23T10:58:24.620Z",
+      "updated_at": "2024-08-23T10:58:24.620Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "title": "Чизбургер",
+      "description": "Рубленый бифштекс из натуральной цельной говядины с кусочками сыра Чеддер на карамелизованной булочке, заправленной горчицей, кетчупом, луком и кусочком маринованного огурчика",
+      "preview": "products/image/cheaseburger.webp",
+      "category": 1,
+      "price": 78,
+      "created_at": "2024-08-23T10:59:40.782Z",
+      "updated_at": "2024-08-23T10:59:40.782Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "title": "Биг Спешиал",
+      "description": "Это неповторимый сандвич с большим рубленым бифштексом из 100% отборной говядины на большой булочке с кунжутом. Особенный вкус сандвичу придают три кусочка сыра Эмменталь, два ломтика помидора, свежий салат, лук и соус с дымком.",
+      "preview": "products/image/big_special.webp",
+      "category": 1,
+      "price": 299,
+      "created_at": "2024-08-23T11:01:03.997Z",
+      "updated_at": "2024-08-23T11:01:03.997Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "title": "Чикенбургер",
+      "description": "Обжаренная куриная котлета из сочного куриного мяса, панированная в сухарях, которая подается на карамелизованной булочке, заправленной свежим салатом и специальным соусом",
+      "preview": "products/image/чикенбургер.webp",
+      "category": 1,
+      "price": 65,
+      "created_at": "2024-08-23T11:01:36.141Z",
+      "updated_at": "2024-08-23T11:01:36.141Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "title": "Картофель Фри Маленький",
+      "description": "Вкусные, обжаренные в растительном фритюре и слегка посоленные палочки картофеля",
+      "preview": "products/image/фри.webp",
+      "category": 2,
+      "price": 65,
+      "created_at": "2024-08-23T11:03:26.693Z",
+      "updated_at": "2024-08-23T11:03:26.693Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "title": "Картофель Фри Средний",
+      "description": "Вкусные, обжаренные в растительном фритюре и слегка посоленные палочки картофеля",
+      "preview": "products/image/фри_TrFmFak.webp",
+      "category": 2,
+      "price": 89,
+      "created_at": "2024-08-23T11:04:06.020Z",
+      "updated_at": "2024-08-23T11:04:06.020Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "title": "Картофель Фри Большой",
+      "description": "Вкусные, обжаренные в растительном фритюре и слегка посоленные палочки картофеля",
+      "preview": "products/image/фри_l4h5JCi.webp",
+      "category": 2,
+      "price": 109,
+      "created_at": "2024-08-23T11:04:32.485Z",
+      "updated_at": "2024-08-23T11:04:32.485Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "title": "Картофель по-деревенски средний",
+      "description": "Вкусные, обжаренные в растительном фритюре ломтики картофеля со специями",
+      "preview": "products/image/по-деревенски.webp",
+      "category": 2,
+      "price": 99,
+      "created_at": "2024-08-23T11:09:05.636Z",
+      "updated_at": "2024-08-23T11:09:05.636Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "title": "Лимонный тарт",
+      "description": "Легкий тарт в элегантном стиле: лимонная начинка на песочной основе со сливочным сыром",
+      "preview": "products/image/лимон.webp",
+      "category": 3,
+      "price": 185,
+      "created_at": "2024-08-23T11:09:44.538Z",
+      "updated_at": "2024-08-23T11:09:44.539Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "title": "Чизкейк Классический",
+      "description": "Классический нежный десерт из сливочного сыра на песочной основе",
+      "preview": "products/image/классический.webp",
+      "category": 3,
+      "price": 185,
+      "created_at": "2024-08-23T11:10:38.307Z",
+      "updated_at": "2024-08-23T11:10:38.307Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "title": "Тирамису",
+      "description": "Классический десерт с мягким кофейным бисквитом, нежным муссом со вкусом сыра маскарпоне и ароматным какао",
+      "preview": "products/image/тирамису.webp",
+      "category": 3,
+      "price": 175,
+      "created_at": "2024-08-23T11:11:05.056Z",
+      "updated_at": "2024-08-23T11:11:05.056Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+      "title": "Сырный соус",
+      "description": "Сырный соус",
+      "preview": "products/image/сырный.webp",
+      "category": 4,
+      "price": 45,
+      "created_at": "2024-08-23T11:12:02.338Z",
+      "updated_at": "2024-08-23T11:12:02.338Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+      "title": "Соус Кисло-сладкий",
+      "description": "Соус Кисло-сладкий",
+      "preview": "products/image/кисло-сладкий.webp",
+      "category": 4,
+      "price": 45,
+      "created_at": "2024-08-23T11:12:27.577Z",
+      "updated_at": "2024-08-23T11:12:27.577Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+      "title": "Соус Барбекю",
+      "description": "Соус Барбекю",
+      "preview": "products/image/барбекю.webp",
+      "category": 4,
+      "price": 45,
+      "created_at": "2024-08-23T11:12:52.305Z",
+      "updated_at": "2024-08-23T11:12:52.305Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+      "title": "Капучино (300 мл)",
+      "description": "Молочный напиток с тонким ароматом эспрессо и плотной шапкой молочной пены",
+      "preview": "products/image/кофе.webp",
+      "category": 5,
+      "price": 109,
+      "created_at": "2024-08-23T11:13:22.851Z",
+      "updated_at": "2024-08-23T11:13:22.851Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 16,
+    "fields": {
+      "title": "Латте (400 мл)",
+      "description": "Молочный напиток с тонким ароматом эспрессо и нежной молочной пеной",
+      "preview": "products/image/кофе_uO08zv6.webp",
+      "category": 5,
+      "price": 129,
+      "created_at": "2024-08-23T11:13:52.119Z",
+      "updated_at": "2024-08-23T11:13:52.119Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 17,
+    "fields": {
+      "title": "Чай Черный",
+      "description": "Чай Черный",
+      "preview": "products/image/чай_черный.webp",
+      "category": 5,
+      "price": 60,
+      "created_at": "2024-08-23T11:14:17.097Z",
+      "updated_at": "2024-08-23T11:14:17.097Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 18,
+    "fields": {
+      "title": "Чай Зеленый",
+      "description": "Чай Зеленый",
+      "preview": "products/image/чай_зеленый.webp",
+      "category": 5,
+      "price": 60,
+      "created_at": "2024-08-23T11:14:35.775Z",
+      "updated_at": "2024-08-23T11:14:35.775Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 19,
+    "fields": {
+      "title": "Лимонад Капри",
+      "description": "Освежающий напиток на основе Добрый Лимон-лайм со вкусом малины и ежевики",
+      "preview": "products/image/капри.webp",
+      "category": 6,
+      "price": 125,
+      "created_at": "2024-08-23T11:15:08.511Z",
+      "updated_at": "2024-08-23T11:15:08.511Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 20,
+    "fields": {
+      "title": "Санрайз Малина-ежевика",
+      "description": "Освежающий напиток на основе апельсинового сока со вкусом малины и ежевики",
+      "preview": "products/image/санрайз.webp",
+      "category": 6,
+      "price": 139,
+      "created_at": "2024-08-23T11:15:44.748Z",
+      "updated_at": "2024-08-23T11:15:44.748Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 21,
+    "fields": {
+      "title": "Физз Вишня",
+      "description": "Прохладительный газированный напиток со вкусом спелой вишни",
+      "preview": "products/image/вишня.webp",
+      "category": 6,
+      "price": 125,
+      "created_at": "2024-08-23T11:16:31.721Z",
+      "updated_at": "2024-08-23T11:16:31.721Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 22,
+    "fields": {
+      "title": "Биг Хит",
+      "description": "Легендарный бургер с двумя рублеными бифштексами из 100% говядины, маринованными огурчиками, свежим салатом «Айсберг», ломтиком плавленого сыра Чеддер и специальным соусом «Биг Хит» на новой булочке с двумя видами кунжута",
+      "preview": "products/image/bighit.webp",
+      "category": 1,
+      "price": 186,
+      "created_at": "2024-08-23T11:16:53.376Z",
+      "updated_at": "2024-08-23T11:16:53.376Z"
+    }
+  }
+]

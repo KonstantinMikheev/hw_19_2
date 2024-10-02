@@ -1,0 +1,49 @@
+<header data-bs-theme="dark">
+    <div class="collapse text-bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4>О нас</h4>
+                    <p class="text-body-secondary">
+                        Каждый день наша команда готовит для посетителей продукты из
+                        натуральных ингредиентов. Разнообразное меню, удобная экологичная упаковка, приятная атмосфера,
+                        быстрое обслуживание и доступные цены — это далеко не полный список причин, по которым россияне
+                        выбирают «Кафе-мафе».
+                    </p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4>Меню</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'catalog:product_list' %}" class="text-secondary">Главная</a></li>
+                        <li><a href="{% url 'catalog:contacts' %}" class="text-secondary">Контакты</a></li>
+                        {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'catalog:product_create' %}" class="text-secondary">Добавить продукт</a>
+                        </li>
+                        <li><a href="{% url 'users:profile' %}" class="text-secondary">Профиль</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'blog:list' %}" class="text-secondary">Посты</a></li>
+                        <li><a href="{% url 'catalog:category_list' %}" class="text-secondary">Категории</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'users:logout' %}" class="text-secondary">Выход</a></li>
+                        {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-secondary">Вход</a></li>
+                        <li><a href="{% url 'users:register' %}" class="text-secondary">Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="{% url 'catalog:product_list' %}" class="navbar-brand d-flex align-items-center">
+                <strong>Кафе-мафе</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
