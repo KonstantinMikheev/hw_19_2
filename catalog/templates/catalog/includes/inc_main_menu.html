@@ -23,6 +23,7 @@
                         <li><a href="{% url 'users:profile' %}" class="text-secondary">Профиль</a></li>
                         {% endif %}
                         <li><a href="{% url 'blog:list' %}" class="text-secondary">Посты</a></li>
+                        <li><a href="{% url 'catalog:category_list' %}" class="text-secondary">Категории</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'users:logout' %}" class="text-secondary">Выход</a></li>
                         {% else %}

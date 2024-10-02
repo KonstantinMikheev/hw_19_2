@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ContactForm, ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Category, Product, ContactData, Version
+from catalog.services import get_categories_from_cache, get_products_from_cache
 
 
 class ProductListView(ListView):
@@ -15,7 +16,8 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         """Метод для фильтрации продуктов по категории с подгрузкой версий"""
-        queryset = super().get_queryset()
+        # queryset = Product.objects.all()
+        queryset = get_products_from_cache()
         category_id = self.request.GET.get('category')
         if category_id:
             queryset = queryset.filter(category_id=category_id)
@@ -25,7 +27,8 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         """Метод для вывода названия версии если она активна"""
         context_data = super().get_context_data(**kwargs)
-        context_data['categories'] = Category.objects.all()
+        # context_data['categories'] = Category.objects.all()
+        context_data['categories'] = get_categories_from_cache()
         context_data['title'] = 'Главная'
         products = context_data['product_list']
         for product in products:
@@ -157,3 +160,10 @@ class ContactsDataView(TemplateView):
 #         ContactData.objects.create(name=name, phone=phone, message=message)
 #     contacts_data = ContactData.objects.all()
 #     return render(request, 'catalog/contacts.html', {'contacts': contacts_data, 'title': 'Контакты'})
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return get_categories_from_cache()

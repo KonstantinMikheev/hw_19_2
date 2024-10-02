@@ -1,6 +1,7 @@
-Django==4.2.2
+Django
 ipython
 orm
 pillow
 psycopg2-binary
-pytils
+redis
+python-dotenv

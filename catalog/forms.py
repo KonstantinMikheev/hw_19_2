@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField
 
-from catalog.models import ContactData, Product, Version
+from catalog.models import ContactData, Product, Version, Category
 
 REJECTED_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар', ]
 
@@ -86,3 +86,7 @@ class VersionForm(StyleFormMixin, forms.ModelForm):
     #
     #     return cleaned_data
 
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
